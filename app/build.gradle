@@ -26,7 +26,7 @@ android {
 }
 
 ext {
-    ktx_version = "1.0.0-rc02"
+    andx_version = "1.0.0-rc02"
     lifecycle_version = "2.0.0-rc01"
     glide_version = "4.8.0"
     retrofit_version = "2.4.0"
@@ -40,8 +40,9 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$ktx_version"
-    implementation "androidx.recyclerview:recyclerview:$ktx_version"
+    implementation "androidx.appcompat:appcompat:$andx_version"
+    implementation "androidx.recyclerview:recyclerview:$andx_version"
+    implementation "androidx.cardview:cardview:$andx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     testImplementation "junit:junit:4.12"
@@ -51,7 +52,7 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 
     // Core Ktx
-    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "androidx.core:core-ktx:$andx_version"
 
     // Image
     implementation "com.github.bumptech.glide:glide:$glide_version"
