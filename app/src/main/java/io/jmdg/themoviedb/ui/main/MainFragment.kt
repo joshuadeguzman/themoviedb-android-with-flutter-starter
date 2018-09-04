@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import io.jmdg.themoviedb.R
 import io.jmdg.themoviedb.adapters.MovieAdapter
 import io.jmdg.themoviedb.data.models.Movie
 import io.jmdg.themoviedb.data.models.Request
+import io.jmdg.themoviedb.utils.Utilities
 import io.jmdg.themoviedb.utils.ViewModelFactory
 import io.jmdg.themoviedb.utils.extensions.*
 import io.jmdg.themoviedb.viewmodel.MovieViewModel
@@ -69,7 +71,7 @@ class MainFragment : Fragment() {
         data.let { movies ->
             when (movies!!.dataState) {
                 DataState.LOADING -> {
-
+                    Utilities.showMessage(view!!.rootView,"Loading movies...")
                 }
 
                 DataState.SUCCESS -> {
@@ -77,7 +79,7 @@ class MainFragment : Fragment() {
                 }
 
                 DataState.ERROR -> {
-
+                    Utilities.showMessage(view!!.rootView,"Error loading data, please try again later.", Snackbar.LENGTH_INDEFINITE)
                 }
             }
         }
