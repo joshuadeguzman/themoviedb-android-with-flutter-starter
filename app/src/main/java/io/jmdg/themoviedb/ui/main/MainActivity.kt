@@ -1,8 +1,8 @@
-package io.jmdg.themoviedb
+package io.jmdg.themoviedb.ui.main
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import io.jmdg.themoviedb.ui.main.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import io.jmdg.themoviedb.R
 
 class MainActivity : AppCompatActivity() {
 
