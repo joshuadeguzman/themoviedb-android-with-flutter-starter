@@ -33,9 +33,8 @@ class MovieAdapter(val context: Context) : RecyclerView.Adapter<MovieAdapter.Vie
         holder.itemView.ivPoster.loadImageFromUrl("https://image.tmdb.org/t/p/w500" + movie.posterPath, 20)
     }
 
-    fun setMovies(dataSet: List<Movie>?) {
+    fun addMovies(dataSet: List<Movie>?) {
         if (dataSet != null) {
-            movies.clear()
             movies.addAll(dataSet)
             notifyDataSetChanged()
         }

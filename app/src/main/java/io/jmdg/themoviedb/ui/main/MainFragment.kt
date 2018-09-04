@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import io.jmdg.themoviedb.R
 import io.jmdg.themoviedb.adapters.MovieAdapter
@@ -25,6 +26,7 @@ class MainFragment : Fragment() {
     private lateinit var mMovieViewModel: MovieViewModel
     private lateinit var mMovieAdapter: MovieAdapter
     private var page = 1
+    private var isLoading = false
 
     companion object {
         fun newInstance() = MainFragment()
@@ -50,8 +52,23 @@ class MainFragment : Fragment() {
     private fun setUpComponents() {
         // Setup RecyclerView
         mMovieAdapter = MovieAdapter(context!!)
-        rvMovies.layoutManager = GridLayoutManager(context, 2)
+        val gridLayoutManager = GridLayoutManager(context, 2)
+        rvMovies.layoutManager = gridLayoutManager
         rvMovies.adapter = mMovieAdapter
+
+        // Setup pagination
+        // More on: https://android.jlelse.eu/android-recyclerview-pagination-e598dc0148f
+        rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visibleItemCount = gridLayoutManager.childCount
+                val totalItemCount = gridLayoutManager.itemCount
+                val pastVisibleItems = gridLayoutManager.findFirstVisibleItemPosition()
+
+                if (visibleItemCount + pastVisibleItems >= totalItemCount && !isLoading) {
+                    mMovieViewModel.getPopular(page++)
+                }
+            }
+        })
 
         // Setup SwipeRefreshLayout
         srlMain.setOnRefreshListener {
@@ -67,25 +84,28 @@ class MainFragment : Fragment() {
     }
 
     private fun onMovieLiveDataChanged(data: Data<Request<Movie>>?) {
-        resetLoadingIndicators()
         data.let { movies ->
             when (movies!!.dataState) {
                 DataState.LOADING -> {
-                    Utilities.showMessage(view!!.rootView,"Loading movies...")
+                    isLoading = true
+                    Utilities.showMessage(view!!.rootView, "Loading movies...")
                 }
 
                 DataState.SUCCESS -> {
-                    mMovieAdapter.setMovies(movies.data!!.results)
+                    resetLoadingIndicators()
+                    mMovieAdapter.addMovies(movies.data!!.results)
                 }
 
                 DataState.ERROR -> {
-                    Utilities.showMessage(view!!.rootView,"Error loading data, please try again later.", Snackbar.LENGTH_INDEFINITE)
+                    resetLoadingIndicators()
+                    Utilities.showMessage(view!!.rootView, "Error loading data, please try again later.", Snackbar.LENGTH_INDEFINITE)
                 }
             }
         }
     }
 
-    private fun resetLoadingIndicators(){
+    private fun resetLoadingIndicators() {
+        isLoading = false
         srlMain.isRefreshing = false
     }
 }
