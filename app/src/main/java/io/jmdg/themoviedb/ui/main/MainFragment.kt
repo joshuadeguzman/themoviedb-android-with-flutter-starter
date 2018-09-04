@@ -46,9 +46,16 @@ class MainFragment : Fragment() {
     }
 
     private fun setUpComponents() {
+        // Setup RecyclerView
         mMovieAdapter = MovieAdapter(context!!)
         rvMovies.layoutManager = GridLayoutManager(context, 2)
         rvMovies.adapter = mMovieAdapter
+
+        // Setup SwipeRefreshLayout
+        srlMain.setOnRefreshListener {
+            mMovieAdapter.clear()
+            mMovieViewModel.getPopular(1)
+        }
     }
 
     private fun subscribeMovieList() {
@@ -58,6 +65,7 @@ class MainFragment : Fragment() {
     }
 
     private fun onMovieLiveDataChanged(data: Data<Request<Movie>>?) {
+        resetLoadingIndicators()
         data.let { movies ->
             when (movies!!.dataState) {
                 DataState.LOADING -> {
@@ -73,5 +81,9 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun resetLoadingIndicators(){
+        srlMain.isRefreshing = false
     }
 }
