@@ -19,4 +19,9 @@ class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
             movieApi.getPopularMovies(page)
                     .doOnNext { Timber.d(Gson().toJson(it.results)) }
                     .doOnError { Timber.e(it) }
+
+    fun getMovies(query: String, page: Int): Observable<Request<Movie>> =
+            movieApi.getMovies(query, page)
+                    .doOnNext { Timber.d(Gson().toJson(it.results)) }
+                    .doOnError { Timber.e(it) }
 }

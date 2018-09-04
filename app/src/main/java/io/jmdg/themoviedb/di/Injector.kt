@@ -1,6 +1,7 @@
 package io.jmdg.themoviedb.di
 
 import dagger.Component
+import io.jmdg.themoviedb.activities.SearchableActivity
 import io.jmdg.themoviedb.di.modules.AppModule
 import io.jmdg.themoviedb.di.modules.NetworkModule
 import io.jmdg.themoviedb.di.modules.ViewModelModule
@@ -14,5 +15,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class, NetworkModule::class, ViewModelModule::class])
 interface Injector {
+    fun inject(searchableActivity: SearchableActivity)
     fun inject(mainFragment: MainFragment)
 }

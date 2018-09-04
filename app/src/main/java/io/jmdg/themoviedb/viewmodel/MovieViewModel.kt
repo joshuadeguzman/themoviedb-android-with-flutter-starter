@@ -35,6 +35,20 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         return movieListLiveData
     }
 
+    fun getMovies(query: String, page: Int): MutableLiveData<Data<Request<Movie>>> {
+        compositeDisposable.add(movieRepository.getMovies(query, page)
+                .doOnSubscribe {
+                    movieListLiveData.postValue(Data(DataState.LOADING, null))
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ movieList ->
+                    movieListLiveData.postValue(Data(DataState.SUCCESS, movieList))
+                }, { movieListLiveData.postValue(Data(DataState.ERROR, null)) })
+        )
+        return movieListLiveData
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()

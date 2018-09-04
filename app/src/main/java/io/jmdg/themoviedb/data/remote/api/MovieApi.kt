@@ -13,4 +13,8 @@ import retrofit2.http.Query
 interface MovieApi {
     @POST("movie/popular")
     fun getPopularMovies(@Query("page") page: Int): Observable<Request<Movie>>
+
+    @POST("search/movie")
+    fun getMovies(@Query("query") query: String,
+                  @Query("page") page: Int): Observable<Request<Movie>>
 }
