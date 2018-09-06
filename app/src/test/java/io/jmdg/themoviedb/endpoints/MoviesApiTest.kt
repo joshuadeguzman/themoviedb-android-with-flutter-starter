@@ -1,11 +1,6 @@
 package io.jmdg.themoviedb.endpoints
 
-import io.jmdg.themoviedb.data.models.Movie
-import io.jmdg.themoviedb.data.models.Request
 import io.jmdg.themoviedb.data.remote.api.MovieApi
-import io.reactivex.observers.TestObserver
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
@@ -23,14 +18,29 @@ internal class MoviesApiTest : BaseApiTest() {
 
     @Test
     fun getPopularMovies() {
-        server.enqueue(createMockResponse(readFromFile("get_movies.json")))
+        server.enqueue(createMockResponse(readFromFile("get_popular_movies.json")))
 
         val subscriber = movieApi.getPopularMovies(1).test()
         subscriber.assertSubscribed()
-        subscriber.assertNoErrors()
         subscriber.assertComplete()
         subscriber.assertValueCount(1)
+        subscriber.assertNoErrors()
         subscriber.assertValue { it.page == 1 }
         subscriber.assertValue { it.results.count() == 20 }
+    }
+
+    @Test
+    fun getMovies() {
+        server.enqueue(createMockResponse(readFromFile("get_movies.json")))
+
+        val subscriber = movieApi.getMovies("foo", 1).test()
+        subscriber.assertSubscribed()
+        subscriber.assertComplete()
+        subscriber.assertValueCount(1)
+        subscriber.assertNoErrors()
+        subscriber.assertValue { it.results.first().id == 9090 }
+        subscriber.assertValue { it.results.first().title == "To Wong Foo, Thanks for Everything! Julie Newmar" }
+        subscriber.assertValue { it.results.first().posterPath == "/xIDEoG9FQGmMCh5XsbkvSuD8WrW.jpg" }
+        subscriber.assertValue { it.results.first().voteAverage == 6.7f }
     }
 }
