@@ -3,7 +3,7 @@ package io.jmdg.themoviedb.data.remote.api
 import io.jmdg.themoviedb.data.models.Movie
 import io.jmdg.themoviedb.data.models.Request
 import io.reactivex.Observable
-import retrofit2.http.POST
+import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
@@ -11,10 +11,10 @@ import retrofit2.http.Query
  */
 
 interface MovieApi {
-    @POST("movie/popular")
+    @GET("movie/popular")
     fun getPopularMovies(@Query("page") page: Int): Observable<Request<Movie>>
 
-    @POST("search/movie")
+    @GET("search/movie")
     fun getMovies(@Query("query") query: String,
                   @Query("page") page: Int): Observable<Request<Movie>>
 }
