@@ -12,9 +12,13 @@ import retrofit2.http.Query
 
 interface MovieApi {
     @GET("movie/popular")
-    fun getPopularMovies(@Query("page") page: Int): Observable<Request<Movie>>
+    fun getPopularMovies(
+            @Query("page") page: Int
+    ): Observable<Request<Movie>>
 
     @GET("search/movie")
-    fun getMovies(@Query("query") query: String,
-                  @Query("page") page: Int): Observable<Request<Movie>>
+    fun getMovies(
+            @Query("query") query: String,
+            @Query("page") page: Int
+    ): Observable<Request<Movie>>
 }
