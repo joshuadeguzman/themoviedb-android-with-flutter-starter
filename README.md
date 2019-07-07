@@ -9,9 +9,9 @@ This project exhibits the usage of MVVM, following and maintaining clean archite
 
 #### META
 
-Joshua de Guzman | [code@jmdg.io](mailto:code@jmdg.io)
+Joshua de Guzman | [contact@joshuadeguzman.me](mailto:contact@joshuadeguzman.me)
 
-Distributed under the [MIT](https://github.com/joshuadeguzman/TheMovieDB/blob/master/LICENSE) license.
+Distributed under the [MIT](https://github.com/joshuadeguzman/themoviedb_with_flutter/blob/master/LICENSE) license.
 
 #### CONTRIBUTING
 
