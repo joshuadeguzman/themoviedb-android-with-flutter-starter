@@ -1,6 +1,7 @@
 package io.jmdg.themoviedb.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import io.jmdg.themoviedb.R
 import io.jmdg.themoviedb.adapters.MovieAdapter
 import io.jmdg.themoviedb.data.models.Movie
 import io.jmdg.themoviedb.data.models.Request
+import io.jmdg.themoviedb.helpers.ItemClickListener
 import io.jmdg.themoviedb.utils.Utilities
 import io.jmdg.themoviedb.utils.ViewModelFactory
 import io.jmdg.themoviedb.utils.extensions.*
@@ -19,7 +21,7 @@ import io.jmdg.themoviedb.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), ItemClickListener<Movie> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -29,6 +31,7 @@ class MainFragment : Fragment() {
     private var isLoading = false
 
     companion object {
+        var TAG = MainFragment::class.java.simpleName
         fun newInstance() = MainFragment()
     }
 
@@ -52,6 +55,7 @@ class MainFragment : Fragment() {
     private fun setUpComponents() {
         // Setup RecyclerView
         mMovieAdapter = MovieAdapter(context!!)
+        mMovieAdapter.itemClickListener = this
         val gridLayoutManager = GridLayoutManager(context, 2)
         rvMovies.layoutManager = gridLayoutManager
         rvMovies.adapter = mMovieAdapter
@@ -107,5 +111,10 @@ class MainFragment : Fragment() {
     private fun resetLoadingIndicators() {
         isLoading = false
         srlMain.isRefreshing = false
+    }
+
+    override fun onItemClick(item: Movie) {
+        Log.d(TAG, "Selected movie is " + item.title + " with an id of " + item.id)
+        // TODO - Connect to Flutter
     }
 }

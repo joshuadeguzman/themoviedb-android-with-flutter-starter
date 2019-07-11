@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.jmdg.themoviedb.R
 import io.jmdg.themoviedb.data.models.Movie
+import io.jmdg.themoviedb.helpers.ItemClickListener
 import io.jmdg.themoviedb.utils.extensions.loadImageFromUrl
 import kotlinx.android.synthetic.main.item_movie.view.*
 
@@ -17,7 +18,8 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter(val context: Context) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    private var movies = ArrayList<Movie>()
+    var itemClickListener: ItemClickListener<Movie>? = null
+    var movies = ArrayList<Movie>()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -28,6 +30,9 @@ class MovieAdapter(val context: Context) : RecyclerView.Adapter<MovieAdapter.Vie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onItemClick(movie)
+        }
         holder.itemView.tvTitle.text = movie.title
         holder.itemView.rbVotes.rating = movie.voteAverage / 2f
         holder.itemView.ivPoster.loadImageFromUrl("https://image.tmdb.org/t/p/w500" + movie.posterPath, 20)
