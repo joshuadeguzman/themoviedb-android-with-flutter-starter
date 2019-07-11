@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:background="@color/colorPrimaryDark">
+    android:layout_margin="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@android:color/black"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivPoster"
@@ -32,6 +31,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:lines="1"
             android:layout_marginBottom="8dp"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
