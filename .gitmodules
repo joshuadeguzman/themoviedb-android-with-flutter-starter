@@ -1,0 +1,4 @@
+[submodule "flutter_submodule"]
+	path = flutter_submodule
+	url = https://github.com/joshuadeguzman/flutter_submodule_demo.git
+	branch = master
